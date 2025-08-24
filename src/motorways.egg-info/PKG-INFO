@@ -1,0 +1,293 @@
+Metadata-Version: 2.4
+Name: motorways
+Version: 0.1.0
+Summary: macOS screen-capture + input-control RL player for Mini Motorways
+Author-email: AI Development <dev@example.com>
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.20.0
+Requires-Dist: opencv-python>=4.5.0
+Requires-Dist: pyautogui>=0.9.50
+Requires-Dist: pyobjc-framework-Cocoa>=9.0
+Requires-Dist: pyobjc-framework-Quartz>=9.0
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: click>=8.0.0
+Requires-Dist: stable-baselines3>=2.0.0
+Requires-Dist: torch>=1.10.0
+Requires-Dist: gymnasium>=0.26.0
+Requires-Dist: pathlib
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Requires-Dist: black>=22.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Requires-Dist: mypy>=1.0.0; extra == "dev"
+Dynamic: license-file
+
+# Mini Motorways RL Player
+
+A macOS screen-capture + input-control RL player that allows trained CNN policies (e.g., PPO) to play Mini Motorways by observing the game grid from pixels and acting through mouse clicks/drags.
+
+## Features
+
+- ✅ **macOS Quartz Window Capture**: Captures specific game window without full-screen recording
+- ✅ **Ratio-Based Calibration**: Survives window moves/resizes with two-point calibration
+- ✅ **PyAutoGUI Mouse Control**: Reliable clicks and drags with failsafe protection
+- ✅ **SB3 & PyTorch Support**: Load PPO models from Stable-Baselines3 or PyTorch
+- ✅ **Real-Time Processing**: 6-12 FPS agent loop with configurable target FPS
+- ✅ **JSONL Logging**: Comprehensive episode logging with frame hashes and actions
+- ✅ **Dry-Run Mode**: Test setup and actions without actual mouse clicks
+- ✅ **CLI Interface**: Simple command-line interface for all operations
+
+## Requirements
+
+### System Requirements
+- **macOS** (Apple Silicon or Intel)
+- **Mini Motorways** game installed and running
+- **Python 3.9+**
+
+### macOS Permissions
+**CRITICAL**: You must grant these permissions before using the tool:
+
+1. **Screen Recording Permission**
+   - Open System Settings → Privacy & Security → Screen Recording  
+   - Add and enable your Terminal/IDE application
+   - Restart your Terminal/IDE after granting permission
+
+2. **Accessibility Permission**
+   - Open System Settings → Privacy & Security → Accessibility
+   - Add and enable your Terminal/IDE application
+   - Restart your Terminal/IDE after granting permission
+
+## Installation
+
+1. **Clone and install dependencies:**
+   ```bash
+   cd /path/to/motorways
+   pip install -e .[dev]
+   ```
+
+2. **Verify installation:**
+   ```bash
+   motorways --help
+   ```
+
+## Quick Start
+
+### 1. One-Time Calibration
+
+Start Mini Motorways and position it visibly on screen, then:
+
+```bash
+motorways calibrate --grid-h 32 --grid-w 32
+```
+
+Follow the interactive prompts:
+- Position mouse over **center** of top-left grid cell → press Enter
+- Position mouse over **center** of bottom-right grid cell → press Enter
+- Optionally calibrate toolbar buttons (road, bridge, roundabout)
+
+The calibration is saved to `~/.motorways/calibration.json` and will work across window moves/resizes.
+
+### 2. Test with Dry Run
+
+```bash
+motorways dry-run --max-steps 20
+```
+
+This performs random actions without actual clicks to verify setup.
+
+### 3. Play with RL Model
+
+```bash
+motorways play --model path/to/your/model.zip --max-steps 1000
+```
+
+For PyTorch models:
+```bash
+motorways play --model path/to/your/model.pt --max-steps 1000
+```
+
+## Usage
+
+### Commands
+
+**`motorways calibrate`**
+- Interactive calibration of grid boundaries and toolbar positions
+- Options: `--grid-h`, `--grid-w`, `--title`, `--output`
+
+**`motorways play`**
+- Run RL agent on live game
+- Required: `--model` (path to .zip or .pt/.pth file)
+- Options: `--fps`, `--input-size`, `--dry-run`, `--max-steps`
+
+**`motorways dry-run`**  
+- Test setup with random actions (no model required)
+- Options: `--fps`, `--max-steps`
+
+### Configuration Files
+
+- **Calibration**: `~/.motorways/calibration.json`
+- **Logs**: `~/.motorways/logs/YYYYMMDD_HHMMSS.jsonl`
+
+### Model Formats
+
+**Stable-Baselines3 (.zip)**
+```python
+from stable_baselines3 import PPO
+model = PPO.load("path/to/model.zip")
+```
+
+**PyTorch (.pt/.pth)**
+```python  
+import torch
+model = torch.load("path/to/model.pt")
+```
+
+## Action Space
+
+The agent can perform these actions:
+
+- **No-op**: Do nothing
+- **Click**: Click at grid cell (r, c)
+- **Drag**: Drag road between multiple grid cells
+- **Toolbar**: Select tools (road, bridge, roundabout, traffic_light, motorway, house)
+
+Action space size = `1 + grid_h×grid_w + grid_h×grid_w + 6`
+
+For 32×32 grid: 1 + 1024 + 1024 + 6 = **2055 actions**
+
+## Development
+
+### Project Structure
+
+```
+src/motorways/
+├── app/
+│   └── main.py              # CLI application
+├── capture/
+│   ├── mac_quartz.py        # Window capture using CoreGraphics
+│   └── preprocess.py        # Image preprocessing for models
+├── control/
+│   ├── mapping.py           # Grid ↔ screen coordinate mapping
+│   └── mouse.py             # Mouse click/drag wrappers
+├── policy/
+│   ├── loader.py            # Model loading (SB3/PyTorch)
+│   └── action_space.py      # Action encoding/decoding
+├── config/
+│   ├── schema.py            # Pydantic data models
+│   └── defaults.py          # Default configuration values
+└── utils/
+    ├── logging.py           # JSONL logging utilities
+    └── permissions.py       # macOS permission checks
+```
+
+### Running Tests
+
+```bash
+# Install development dependencies
+pip install -e .[dev]
+
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov=motorways
+
+# Run specific test file
+pytest tests/test_mapping.py -v
+```
+
+### Code Quality
+
+```bash
+# Format code
+black src tests
+
+# Lint code
+ruff check src tests
+
+# Type checking
+mypy src
+```
+
+## Troubleshooting
+
+### Permission Issues
+
+**Error: "Screen capture returned empty image"**
+- Grant Screen Recording permission to your Terminal/IDE
+- Restart Terminal/IDE after granting permission
+- Ensure Mini Motorways window is visible (not minimized/covered)
+
+**Error: "Mouse clicks do nothing"**  
+- Grant Accessibility permission to your Terminal/IDE
+- Restart Terminal/IDE after granting permission
+
+### Window Detection Issues
+
+**Error: "Window containing 'Mini Motorways' not found"**
+- Make sure Mini Motorways is running
+- Try different `--title` substring (e.g., `--title "Motorways"`)
+- Check window title in Activity Monitor or similar tool
+
+### Calibration Issues
+
+**Error: "Calibration validation failed"**
+- Ensure you clicked on actual grid cell centers
+- Grid boundaries should be clearly visible
+- Re-run calibration if window layout changed (zoom, theme, etc.)
+
+### Performance Issues
+
+**Low FPS / High CPU usage**
+- Reduce `--fps` target (default: 8)
+- Use smaller `--input-size` (default: 128x128)  
+- Close other applications
+- Use `--dry-run` to test without model inference
+
+## Model Training
+
+This package provides the **inference** component. For training RL models, you'll need:
+
+1. **Simulation Environment**: Create Gymnasium environment that mimics Mini Motorways
+2. **Training Pipeline**: Use Stable-Baselines3 or similar framework
+3. **Action Space**: Match the action space defined in `policy/action_space.py`
+4. **Observation Space**: RGB images, typically 128×128 or 256×256
+
+Example training setup:
+```python
+from stable_baselines3 import PPO
+from stable_baselines3.common.env_util import make_vec_env
+
+# Create your Mini Motorways simulator environment
+env = make_vec_env("MiniMotorways-v0", n_envs=4)
+
+# Train PPO model
+model = PPO("CnnPolicy", env, verbose=1)
+model.learn(total_timesteps=1000000)
+
+# Save for use with this package
+model.save("mini_motorways_ppo.zip")
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create feature branch
+3. Make changes with tests
+4. Run quality checks (`black`, `ruff`, `mypy`, `pytest`)
+5. Submit pull request
+
+## License
+
+MIT License - see LICENSE file for details.
+
+## Related Projects
+
+- **Stable-Baselines3**: https://stable-baselines3.readthedocs.io/
+- **Gymnasium**: https://gymnasium.farama.org/  
+- **PyAutoGUI**: https://pyautogui.readthedocs.io/
+- **OpenCV**: https://opencv.org/

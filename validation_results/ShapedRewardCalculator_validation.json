@@ -1,0 +1,107 @@
+{
+  "calculator_name": "ShapedRewardCalculator",
+  "timestamp": 1756014023.0187461,
+  "summary": {
+    "total_tests": 6,
+    "passed_tests": 2,
+    "average_score": 0.4444444444444444,
+    "total_execution_time": 0.15329813957214355
+  },
+  "tests": [
+    {
+      "test_name": "basic_functionality",
+      "passed": true,
+      "score": 1.0,
+      "execution_time": 0.05469179153442383,
+      "details": {
+        "checks": {
+          "result1_is_RewardResult": true,
+          "result2_is_RewardResult": true,
+          "reward1_is_number": true,
+          "reward2_is_number": true,
+          "components1_is_dict": true,
+          "components2_is_dict": true,
+          "metadata1_is_dict": true,
+          "metadata2_is_dict": true,
+          "reward1_finite": true,
+          "reward2_finite": true
+        },
+        "reward1": -24.553152465820315,
+        "reward2": -25.99130181776679,
+        "components1": [
+          "survival",
+          "construction",
+          "network_growth",
+          "activity",
+          "efficiency",
+          "game_over"
+        ],
+        "components2": [
+          "survival",
+          "construction",
+          "network_growth",
+          "activity",
+          "efficiency",
+          "game_over"
+        ]
+      }
+    },
+    {
+      "test_name": "reset_consistency",
+      "passed": false,
+      "score": 0.6666666666666666,
+      "execution_time": 0.0004119873046875,
+      "details": {
+        "checks": {
+          "rewards_consistent": false,
+          "components_same_keys": true,
+          "step_count_reset": true
+        },
+        "reward_difference": 2.8085174560546875,
+        "result1_reward": -27.185174560546876,
+        "result2_reward": -24.37665710449219
+      }
+    },
+    {
+      "test_name": "reward_stability",
+      "passed": false,
+      "score": 0.0,
+      "execution_time": 0.0018270015716552734,
+      "details": {
+        "error": "unsupported operand type(s) for /: 'NoneType' and 'int'"
+      }
+    },
+    {
+      "test_name": "performance",
+      "passed": false,
+      "score": 0.0,
+      "execution_time": 0.0010311603546142578,
+      "details": {
+        "error": "unsupported operand type(s) for /: 'NoneType' and 'int'"
+      }
+    },
+    {
+      "test_name": "component_balance",
+      "passed": false,
+      "score": 0.0,
+      "execution_time": 0.0014240741729736328,
+      "details": {
+        "error": "unsupported operand type(s) for /: 'NoneType' and 'int'"
+      }
+    },
+    {
+      "test_name": "game_over_detection",
+      "passed": true,
+      "score": 1.0,
+      "execution_time": 0.09391212463378906,
+      "details": {
+        "checks": {
+          "normal_no_game_over": true,
+          "has_game_over_detection": true,
+          "game_over_field_present": true
+        },
+        "game_over_detected_in_test": false
+      }
+    }
+  ]
+}
