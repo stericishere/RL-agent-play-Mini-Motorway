@@ -4,7 +4,15 @@ __pycache__
 .ruff_cache
 .pytest_cache
 .claude
-example
-PRPs
-test
-templates
+examples/
+PRPs/
+tests/
+templates/
+test_environment.py
+test_rewards.py
+
+# Ignore all markdown files
+*.md
+
+# Don't ignore README.md
+!README.md
