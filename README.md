@@ -1,109 +1,195 @@
-# Mini Motorways RL Player
+# Motorways: An RL Framework for Mini Motorways
 
-[![GitHub](https://img.shields.io/badge/GitHub-MotorwaysRL-blue?logo=github)]([https://github.com/your-username/motorways-rl](https://github.com/stericishere/RL-agent-play-Mini-Motorways))
-<img width="1436" height="895" alt="Screenshot 2025-08-24 at 19 13 34" src="https://github.com/user-attachments/assets/7df1f5b0-d61f-42b9-8568-03890fd50e8e" />
+[![GitHub](https://img.shields.io/badge/GitHub-MotorwaysRL-blue?logo=github)](https://github.com/stericishere/RL-agent-play-Mini-Motorways)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-<!-- Tech Stack Badges -->
 <p align="center">
-  <!-- Core -->
-  <img src="https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white" alt="Python"/>
-  <img src="https://img.shields.io/badge/macOS-000000?logo=apple&logoColor=white" alt="macOS"/>
-
-  <!-- ML/RL -->
-  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white" alt="PyTorch"/>
-  <img src="https://img.shields.io/badge/Stable%20Baselines3-43B54A?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDptMCAxOGMtNC40MSAwLTgtMy41OS04LThzMy41OS04IDgtOCA4IDMuNTkgOCA4LTMuNTkgOC04IDh6Ii8+PC9zdmc+&logoColor=white" alt="Stable Baselines3"/>
-  <img src="https://img.shields.io/badge/OpenCV-5C3EE8?logo=opencv&logoColor=white" alt="OpenCV"/>
-  
-  <!-- Control -->
-  <img src="https://img.shields.io/badge/PyAutoGUI-2F4F4F?logo=python&logoColor=white" alt="PyAutoGUI"/>
-
-  <!-- Dev -->
-  <img src="https://img.shields.io/badge/Pytest-0A9B0A?logo=pytest&logoColor=white" alt="Pytest"/>
-  <img src="https://img.shields.io/badge/Ruff-222?logo=ruff&logoColor=white" alt="Ruff"/>
-  <img src="https://img.shields.io/badge/Black-000000?logo=python&logoColor=white" alt="Black"/>
+  <img width="1436" height="895" alt="Screenshot of the agent playing Mini Motorways" src="https://github.com/user-attachments/assets/7df1f5b0-d61f-42b9-8568-03890fd50e8e" />
 </p>
 
-A macOS screen-capture + input-control RL player that allows trained CNN policies (e.g., PPO) to play Mini Motorways by observing the game grid from pixels and acting through mouse clicks/drags.
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white" alt="Python"/>
+  <img src="https://img.shields.io/badge/macOS-000000?logo=apple&logoColor=white" alt="macOS"/>
+  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white" alt="PyTorch"/>
+  <img src="https://img.shields.io/badge/Stable%20Baselines3-43B54A" alt="Stable Baselines3"/>
+  <img src="https://img.shields.io/badge/OpenCV-5C3EE8?logo=opencv&logoColor=white" alt="OpenCV"/>
+  <img src="https://img.shields.io/badge/PyAutoGUI-2F4F4F?logo=python&logoColor=white" alt="PyAutoGUI"/>
+  <img src="https://img.shields.io/badge/Pytest-0A9B0A?logo=pytest&logoColor=white" alt="Pytest"/>
+  <img src="https://img.shields.io/badge/Ruff-222?logo=ruff&logoColor=white" alt="Ruff"/>
+</p>
 
-## Overview
+**Motorways** is a complete framework for developing and running reinforcement learning agents that play Mini Motorways on macOS. It bridges the gap between simulation and real-world application by enabling agents to perceive the game through screen capture and act using native mouse inputs.
 
-This project provides a complete framework for running reinforcement learning agents on the game Mini Motorways, directly on a macOS desktop. It intelligently captures the game window, processes the visual data in real-time, and translates agent decisions into mouse actions. The system is designed for flexibility, supporting models from popular libraries like Stable-Baselines3 and PyTorch.
+## Introduction
+
+This project provides a robust platform for applying reinforcement learning to a real-time strategy game. By capturing the screen and controlling the mouse, it allows trained agents to play Mini Motorways without any modifications to the game itself.
 
 ### Key Features
 
-- **Direct Screen Capture**: Uses macOS Quartz for efficient, specific window capture without full-screen recording.
-- **Ratio-Based Calibration**: A robust two-point calibration system that adapts to window moves and resizes.
-- **Precise Mouse Control**: Leverages PyAutoGUI for reliable mouse clicks and drags, with built-in failsafe protection.
-- **Broad Model Support**: Load and run policies from Stable-Baselines3 (PPO) and PyTorch.
-- **Real-Time Performance**: Achieves a 6-12 FPS agent loop, suitable for real-time gameplay.
-- **Comprehensive Logging**: Detailed episode data, including actions and frame hashes, are saved to JSONL files.
-- **Safe Dry-Run Mode**: Test your complete setup, calibration, and action mappings without executing real mouse clicks.
-- **Simple CLI Interface**: All functionalities are accessible through a user-friendly command-line interface.
-
-### Technology Stack
-
-- **Core Language**: Python
-- **Platform**: macOS (Quartz for screen capture)
-- **ML/RL**: PyTorch, Stable-Baselines3
-- **System Control**: PyAutoGUI
-- **Image Processing**: OpenCV, Pillow
-- **Development**: Pytest (Testing), Ruff (Linting), Black (Formatting), MyPy (Type Checking)
+- **Pixel-Perfect Perception**: Captures the game window in real-time using macOS Quartz for high-performance, low-latency observations.
+- **Adaptive Calibration**: A two-point calibration system ensures that the agent's actions are accurately mapped to the game grid, even if the window is moved or resized.
+- **Reliable Control**: Uses PyAutoGUI for precise and reliable mouse control, with a built-in failsafe to prevent unintended actions.
+- **Flexible Policy Support**: Load and run policies from popular RL libraries like Stable-Baselines3 and PyTorch.
+- **Real-Time Performance**: The agent loop runs at 6-12 FPS, making it suitable for real-time gameplay.
+- **Extensive Logging**: Captures detailed episode data, including actions, rewards, and frame hashes, to a JSONL file for analysis.
+- **Safe Dry-Run Mode**: Test your setup and agent logic without executing any mouse actions.
 
 ## Architecture
 
-The project is composed of several modular components:
+The framework is designed with a modular architecture that separates concerns and allows for easy extension and modification.
 
-1.  **Capture Engine**: Handles real-time window capture (`mac_quartz.py`) and image preprocessing (`preprocess.py`) to create observations for the agent.
-2.  **Control System**: Manages coordinate mapping from the agent's grid-based view to screen pixels (`mapping.py`) and executes mouse actions (`mouse.py`).
-3.  **Policy Loader**: A flexible loader (`loader.py`) that supports both Stable-Baselines3 and PyTorch model formats.
-4.  **CLI Application**: The main entry point (`main.py`) that ties all components together and exposes them through a simple command interface.
+```
++---------------------+      +---------------------+      +--------------------+
+|    Capture Engine   |----->|   Policy (Agent)    |----->|   Control System   |
+| (macOS Quartz)      |      | (PyTorch/SB3)       |      | (PyAutoGUI)        |
++---------------------+      +---------------------+      +--------------------+
+          |                            ^                            |
+          |                            |                            |
+          v                            |                            v
++---------------------+      +---------------------+      +--------------------+
+| Image Preprocessing |----->|  Observation Space  |      | Coordinate Mapping |
+| (OpenCV)            |      +---------------------+      | (Calibration)      |
++---------------------+                                   +--------------------+
+```
 
-## Quick Start
+1.  **Capture Engine**: Captures the game window and preprocesses the raw pixels into observations for the agent.
+2.  **Policy (Agent)**: A trained RL model that takes an observation and returns an action.
+3.  **Control System**: Maps the agent's action to screen coordinates and executes it using mouse commands.
+
+## Reinforcement Learning Approach
+
+The primary RL policy for this project is a **Deep Q-Network (DQN)**, chosen for its effectiveness in solving games with discrete action spaces and pixel-based inputs.
+
+### Model Architecture
+
+The DQN uses a convolutional neural network (CNN) to extract features from the game's screen captures. The architecture is as follows:
+
+1.  **Input**: A stack of preprocessed game frames (e.g., 128x128 RGB images).
+2.  **Convolutional Layers**: A series of convolutional layers with ReLU activation functions to identify spatial hierarchies of features, such as roads, houses, and factories.
+3.  **Fully Connected Layers**: The flattened output from the convolutional layers is passed through one or more fully connected layers to learn a non-linear combination of the features.
+4.  **Output Layer**: The final layer outputs a Q-value for each possible action in the action space.
+
+### Training Logic
+
+The DQN is trained using the following logic:
+
+-   **Epsilon-Greedy Strategy**: To balance exploration and exploitation, the agent selects a random action with a probability of epsilon (which decays over time) and the action with the highest Q-value with a probability of 1-epsilon.
+-   **Experience Replay**: The agent stores its experiences (state, action, reward, next_state) in a replay buffer. During training, it samples a random minibatch of experiences from the buffer to update the network weights. This decorrelates the experiences and improves training stability.
+-   **Target Network**: A separate target network with the same architecture as the main DQN is used to generate the target Q-values. The target network's weights are periodically updated with the main network's weights, which helps to stabilize the learning process.
+
+### Reward Function Design
+
+A crucial component of the RL agent is the reward function. The design philosophy is to create a shaped reward function that guides the agent towards efficient and effective gameplay.
+
+The reward function will be a combination of the following components:
+
+-   **Positive Rewards**:
+    -   Successfully connecting a house to a factory of the same color.
+    -   Cars successfully reaching their destination.
+    -   Collecting pins.
+-   **Negative Rewards (Penalties)**:
+    -   Cars waiting for a long time at a house.
+    -   Factories with a high number of unfulfilled requests.
+    -   Inefficient road placement (e.g., overly long roads, unnecessary intersections).
+-   **Game Score**: The in-game score will be used as a baseline reward.
+
+To address the challenges of sparse rewards and credit assignment, we will use a **shaped reward function** that provides more frequent feedback to the agent, guiding it towards desirable behaviors.
+
+### Proposed Hyperparameters
+
+| Hyperparameter | Value |
+| :--- | :--- |
+| Learning Rate | 0.0001 |
+| Discount Factor (gamma) | 0.99 |
+| Replay Buffer Size | 100,000 |
+| Batch Size | 32 |
+| Epsilon Start | 1.0 |
+| Epsilon End | 0.1 |
+| Epsilon Decay | 0.995 |
+
+## Performance and Evaluation
+
+The performance of the agent is evaluated based on the following metrics:
+
+-   **Average Game Score**: The average score achieved by the agent over a set number of episodes.
+-   **Number of Cars Served**: The total number of cars that successfully reach their destination.
+-   **Average Trip Time**: The average time it takes for a car to travel from a house to a factory.
+-   **Resource Utilization**: The efficiency of the agent in using available resources, such as roads and bridges.
+
+The framework's real-time performance is also a key consideration, with the agent loop currently running at **6-12 FPS**.
+
+## Challenges and Future Work
+
+This project presents several challenges and opportunities for future work:
+
+-   **Dynamic Game Environment**: The game is highly dynamic, with new houses and factories appearing over time. The agent must be able to adapt to these changes.
+-   **Large Action Space**: The number of possible actions is large, making it difficult for the agent to explore the entire action space.
+-   **Credit Assignment Problem**: It is challenging to determine which actions are responsible for the final outcome of the game.
+
+Future work could involve:
+
+-   **Advanced RL Algorithms**: Exploring more advanced RL algorithms, such as Rainbow DQN or Proximal Policy Optimization (PPO).
+-   **Improved Network Architectures**: Experimenting with different network architectures, such as using attention mechanisms to focus on important parts of the game screen.
+-   **Self-Supervised Learning**: Using self-supervised learning to pre-train the feature extractor on a large dataset of unlabeled game footage.
+
+## Getting Started
 
 ### Prerequisites
 
-- **macOS** (Apple Silicon or Intel)
-- **Mini Motorways** game installed
-- **Python 3.9+**
-- **Critical macOS Permissions**: You must grant **Screen Recording** and **Accessibility** permissions to your Terminal or IDE.
+- macOS (Apple Silicon or Intel)
+- Mini Motorways installed
+- Python 3.9+
+- **macOS Permissions**: Grant **Screen Recording** and **Accessibility** permissions to your Terminal or IDE.
 
-### Development Setup
+### Installation
 
-1.  **Clone the repository**
+1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/motorways-rl.git
-    cd motorways-rl
+    git clone https://github.com/stericishere/RL-agent-play-Mini-Motorways.git
+    cd RL-agent-play-Mini-Motorways
     ```
 
-2.  **Install dependencies**
+2.  **Install dependencies:**
     ```bash
     pip install -e .[dev]
     ```
 
-3.  **Calibrate the game window**
-    Start Mini Motorways, then run the calibration command and follow the on-screen prompts.
+### Calibration
+
+Before running the agent, you need to calibrate the game window.
+
+1.  Launch Mini Motorways.
+2.  Run the calibration command and follow the on-screen instructions:
     ```bash
     motorways calibrate --grid-h 32 --grid-w 32
     ```
 
-4.  **Run the agent**
-    ```bash
-    # Test with a dry run (no clicks)
-    motorways dry-run --max-steps 50
-
-    # Play with a trained model
-    motorways play --model path/to/your/model.zip --max-steps 1000
-    ```
-
 ## Usage
 
-1.  Launch Mini Motorways.
-2.  Use the `motorways calibrate` command once to set up the grid mapping.
-3.  Use `motorways play --model <path>` to run your trained agent.
+Once the calibration is complete, you can run the agent.
 
-## Development Commands
+### Dry Run
+
+It is recommended to start with a dry run to ensure that everything is set up correctly. In this mode, the agent will perform all actions except for the final mouse click.
+
+```bash
+motorways dry-run --max-steps 50
+```
+
+### Live Run
+
+To run the agent with a trained model, use the `play` command:
+
+```bash
+motorways play --model path/to/your/model.zip --max-steps 1000
+```
+
+## Development
 
 ### Code Quality & Testing
+
+This project uses `black` for formatting, `ruff` for linting, and `pytest` for testing.
+
 ```bash
 # Format code
 black src tests
@@ -116,30 +202,6 @@ mypy src
 
 # Run all tests
 pytest
-```
-
-## Model Training
-
-This package provides the **inference** engine. To train your own models, you need to create a custom [Gymnasium](https://gymnasium.farama.org/) environment that simulates the game's logic.
-
-The action and observation spaces must match those defined in this project:
--   **Action Space**: See `src/motorways/policy/action_space.py`.
--   **Observation Space**: RGB images (e.g., 128x128 pixels).
-
-An example training setup using Stable-Baselines3:
-```python
-from stable_baselines3 import PPO
-from stable_baselines3.common.env_util import make_vec_env
-
-# Create your custom Mini Motorways simulator environment
-env = make_vec_env("MiniMotorways-v0", n_envs=4)
-
-# Train a PPO model
-model = PPO("CnnPolicy", env, verbose=1)
-model.learn(total_timesteps=1_000_000)
-
-# Save the model for use with this player
-model.save("mini_motorways_ppo.zip")
 ```
 
 ## Project Structure
