@@ -1,6 +1,7 @@
 # Mini Motorways RL Player
 
 [![GitHub](https://img.shields.io/badge/GitHub-MotorwaysRL-blue?logo=github)]([https://github.com/your-username/motorways-rl](https://github.com/stericishere/RL-agent-play-Mini-Motorways))
+<img width="1436" height="895" alt="Screenshot 2025-08-24 at 19 13 34" src="https://github.com/user-attachments/assets/7df1f5b0-d61f-42b9-8568-03890fd50e8e" />
 
 <!-- Tech Stack Badges -->
 <p align="center">
