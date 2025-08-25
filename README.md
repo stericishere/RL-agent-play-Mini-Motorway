@@ -1,4 +1,4 @@
-# Motorways: An RL Framework for Mini Motorways
+# An RL Agent that play Mini Motorways
 
 [![GitHub](https://img.shields.io/badge/GitHub-MotorwaysRL-blue?logo=github)](https://github.com/stericishere/RL-agent-play-Mini-Motorways)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
