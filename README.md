@@ -184,26 +184,6 @@ To run the agent with a trained model, use the `play` command:
 motorways play --model path/to/your/model.zip --max-steps 1000
 ```
 
-## Development
-
-### Code Quality & Testing
-
-This project uses `black` for formatting, `ruff` for linting, and `pytest` for testing.
-
-```bash
-# Format code
-black src tests
-
-# Lint and format
-ruff check src tests --fix
-
-# Type checking
-mypy src
-
-# Run all tests
-pytest
-```
-
 ## Project Structure
 
 ```
