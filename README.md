@@ -2,9 +2,8 @@
 
 [![GitHub](https://img.shields.io/badge/GitHub-MotorwaysRL-blue?logo=github)](https://github.com/stericishere/RL-agent-play-Mini-Motorways)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 <p align="center">
-  <img width="1436" height="895" alt="Screenshot of the agent playing Mini Motorways" src="https://github.com/user-attachments/assets/7df1f5b0-d61f-42b9-8568-03890fd50e8e" />
+  <img width="721" height="451" alt="Screenshot 2025-08-24 at 20 05 22" src="https://github.com/user-attachments/assets/9c322024-0713-4abf-a28c-037f743e6ee2" />
 </p>
 
 <p align="center">
