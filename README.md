@@ -13,8 +13,6 @@
   <img src="https://img.shields.io/badge/Stable%20Baselines3-43B54A" alt="Stable Baselines3"/>
   <img src="https://img.shields.io/badge/OpenCV-5C3EE8?logo=opencv&logoColor=white" alt="OpenCV"/>
   <img src="https://img.shields.io/badge/PyAutoGUI-2F4F4F?logo=python&logoColor=white" alt="PyAutoGUI"/>
-  <img src="https://img.shields.io/badge/Pytest-0A9B0A?logo=pytest&logoColor=white" alt="Pytest"/>
-  <img src="https://img.shields.io/badge/Ruff-222?logo=ruff&logoColor=white" alt="Ruff"/>
 </p>
 
 **Motorways** is a complete framework for developing and running reinforcement learning agents that play Mini Motorways on macOS. It bridges the gap between simulation and real-world application by enabling agents to perceive the game through screen capture and act using native mouse inputs.
